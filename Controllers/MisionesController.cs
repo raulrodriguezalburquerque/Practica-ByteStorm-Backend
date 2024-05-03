@@ -45,18 +45,6 @@ namespace ByteStorm.Controllers
             return MisionToDTO(mision, true, true);
         }
 
-        /// <summary>
-        /// GET: api/Misiones/Planificadas
-        /// </summary>
-        /// <returns> Lista de misiones planificadas </returns>
-        [HttpGet("Planificadas")]
-        public async Task<ActionResult<IEnumerable<MisionDTO>>> GetMisionesPlanificadas()
-        {
-            return await _context.Misiones.Where(m => m.estado == "Planificada")
-                .Include(m => m.operativo).Include(m => m.equipos)
-                .Select(m => MisionToDTO(m, true, true)).ToListAsync();
-        }
-
         // PUT: api/Misiones/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMision(int id, MisionDTO misionDTO)

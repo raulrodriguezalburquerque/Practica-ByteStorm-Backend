@@ -44,17 +44,6 @@ namespace ByteStorm.Controllers
             return EquipoToDTO(equipo, true);
         }
 
-        /// <summary>
-        /// GET: api/Equipos/Disponibles
-        /// </summary>
-        /// <returns> Lista de equipos disponibles </returns>
-        [HttpGet("Disponibles")]
-        public async Task<ActionResult<IEnumerable<EquipoDTO>>> GetEquiposDisponibles()
-        {
-            return await _context.Equipos.Where(e => e.estado == "Disponible")
-                .Include(e => e.mision).Select(e => EquipoToDTO(e, true)).ToListAsync();
-        }
-
         // PUT: api/Equipos/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutEquipo(int id, EquipoDTO equipoDTO)
