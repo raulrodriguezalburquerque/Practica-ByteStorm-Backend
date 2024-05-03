@@ -3,16 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\raulr\\Desktop\\Trabajo\\Repositorios-CSharp\\ByteStorm\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{0E8795D7-B905-45EE-BC62-B56590F8E17D}|ByteStorm.csproj|c:\\users\\raulr\\desktop\\trabajo\\repositorios-csharp\\bytestorm\\models\\bdcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0E8795D7-B905-45EE-BC62-B56590F8E17D}|ByteStorm.csproj|solutionrelative:models\\bdcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0E8795D7-B905-45EE-BC62-B56590F8E17D}|ByteStorm.csproj|c:\\users\\raulr\\desktop\\trabajo\\repositorios-csharp\\bytestorm\\controllers\\misionescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0E8795D7-B905-45EE-BC62-B56590F8E17D}|ByteStorm.csproj|solutionrelative:controllers\\misionescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0E8795D7-B905-45EE-BC62-B56590F8E17D}|ByteStorm.csproj|c:\\users\\raulr\\desktop\\trabajo\\repositorios-csharp\\bytestorm\\dto\\equipodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0E8795D7-B905-45EE-BC62-B56590F8E17D}|ByteStorm.csproj|solutionrelative:dto\\equipodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0E8795D7-B905-45EE-BC62-B56590F8E17D}|ByteStorm.csproj|c:\\users\\raulr\\desktop\\trabajo\\repositorios-csharp\\bytestorm\\models\\equipo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0E8795D7-B905-45EE-BC62-B56590F8E17D}|ByteStorm.csproj|solutionrelative:models\\equipo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0E8795D7-B905-45EE-BC62-B56590F8E17D}|ByteStorm.csproj|c:\\users\\raulr\\desktop\\trabajo\\repositorios-csharp\\bytestorm\\controllers\\equiposcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0E8795D7-B905-45EE-BC62-B56590F8E17D}|ByteStorm.csproj|solutionrelative:controllers\\equiposcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0E8795D7-B905-45EE-BC62-B56590F8E17D}|ByteStorm.csproj|c:\\users\\raulr\\desktop\\trabajo\\repositorios-csharp\\bytestorm\\controllers\\operativoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0E8795D7-B905-45EE-BC62-B56590F8E17D}|ByteStorm.csproj|solutionrelative:controllers\\operativoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0E8795D7-B905-45EE-BC62-B56590F8E17D}|ByteStorm.csproj|c:\\users\\raulr\\desktop\\trabajo\\repositorios-csharp\\bytestorm\\controllers\\misionescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0E8795D7-B905-45EE-BC62-B56590F8E17D}|ByteStorm.csproj|solutionrelative:controllers\\misionescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0E8795D7-B905-45EE-BC62-B56590F8E17D}|ByteStorm.csproj|c:\\users\\raulr\\desktop\\trabajo\\repositorios-csharp\\bytestorm\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0E8795D7-B905-45EE-BC62-B56590F8E17D}|ByteStorm.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,45 +34,80 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "BDContext.cs",
-              "DocumentMoniker": "C:\\Users\\raulr\\Desktop\\Trabajo\\Repositorios-CSharp\\ByteStorm\\Models\\BDContext.cs",
-              "RelativeDocumentMoniker": "Models\\BDContext.cs",
-              "ToolTip": "C:\\Users\\raulr\\Desktop\\Trabajo\\Repositorios-CSharp\\ByteStorm\\Models\\BDContext.cs",
-              "RelativeToolTip": "Models\\BDContext.cs",
-              "ViewState": "AQIAAA0AAAAAAAAAAAAuwB8AAAAJAAAA",
+              "DocumentIndex": 1,
+              "Title": "EquipoDTO.cs",
+              "DocumentMoniker": "C:\\Users\\raulr\\Desktop\\Trabajo\\Repositorios-CSharp\\ByteStorm\\DTO\\EquipoDTO.cs",
+              "RelativeDocumentMoniker": "DTO\\EquipoDTO.cs",
+              "ToolTip": "C:\\Users\\raulr\\Desktop\\Trabajo\\Repositorios-CSharp\\ByteStorm\\DTO\\EquipoDTO.cs",
+              "RelativeToolTip": "DTO\\EquipoDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAA4AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-25T11:29:55.194Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-30T11:00:25.091Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "Equipo.cs",
+              "DocumentMoniker": "C:\\Users\\raulr\\Desktop\\Trabajo\\Repositorios-CSharp\\ByteStorm\\Models\\Equipo.cs",
+              "RelativeDocumentMoniker": "Models\\Equipo.cs",
+              "ToolTip": "C:\\Users\\raulr\\Desktop\\Trabajo\\Repositorios-CSharp\\ByteStorm\\Models\\Equipo.cs",
+              "RelativeToolTip": "Models\\Equipo.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAAAoAAAAjAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-30T10:54:43.176Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "EquiposController.cs",
+              "DocumentMoniker": "C:\\Users\\raulr\\Desktop\\Trabajo\\Repositorios-CSharp\\ByteStorm\\Controllers\\EquiposController.cs",
+              "RelativeDocumentMoniker": "Controllers\\EquiposController.cs",
+              "ToolTip": "C:\\Users\\raulr\\Desktop\\Trabajo\\Repositorios-CSharp\\ByteStorm\\Controllers\\EquiposController.cs",
+              "RelativeToolTip": "Controllers\\EquiposController.cs",
+              "ViewState": "AQIAABEAAAAAAAAAAAAIwKEAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-30T10:21:00.443Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "MisionesController.cs",
               "DocumentMoniker": "C:\\Users\\raulr\\Desktop\\Trabajo\\Repositorios-CSharp\\ByteStorm\\Controllers\\MisionesController.cs",
               "RelativeDocumentMoniker": "Controllers\\MisionesController.cs",
               "ToolTip": "C:\\Users\\raulr\\Desktop\\Trabajo\\Repositorios-CSharp\\ByteStorm\\Controllers\\MisionesController.cs",
               "RelativeToolTip": "Controllers\\MisionesController.cs",
-              "ViewState": "AQIAAHkAAAAAAAAAAADwv4MAAAAvAAAA",
+              "ViewState": "AQIAALMAAAAAAAAAAAAAAL8AAAAyAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-19T07:53:08.678Z"
+              "WhenOpened": "2024-04-30T10:21:13.73Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "OperativosController.cs",
               "DocumentMoniker": "C:\\Users\\raulr\\Desktop\\Trabajo\\Repositorios-CSharp\\ByteStorm\\Controllers\\OperativosController.cs",
               "RelativeDocumentMoniker": "Controllers\\OperativosController.cs",
               "ToolTip": "C:\\Users\\raulr\\Desktop\\Trabajo\\Repositorios-CSharp\\ByteStorm\\Controllers\\OperativosController.cs",
               "RelativeToolTip": "Controllers\\OperativosController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAeAAAA",
+              "ViewState": "AQIAAMUAAAAAAAAAAAAIwM4AAAAvAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-22T12:00:31.617Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-30T10:21:12.497Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\raulr\\Desktop\\Trabajo\\Repositorios-CSharp\\ByteStorm\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\raulr\\Desktop\\Trabajo\\Repositorios-CSharp\\ByteStorm\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AQIAABUAAAAAAAAAAAAAACAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-30T09:48:10.534Z"
             }
           ]
         }

@@ -27,7 +27,7 @@ namespace ByteStorm.Controllers
         public async Task<ActionResult<IEnumerable<MisionDTO>>> GetMisiones()
         {
             return await _context.Misiones.Include(m => m.operativo).Include(m => m.equipos)
-                .Select(m => MisionToDTO(m, true)).ToListAsync();
+                .Select(m => MisionToDTO(m, true, true)).ToListAsync();
         }
 
         // GET: api/Misiones/5
@@ -42,7 +42,7 @@ namespace ByteStorm.Controllers
                 return NotFound();
             }
 
-            return MisionToDTO(mision, true);
+            return MisionToDTO(mision, true, true);
         }
 
         /// <summary>
@@ -54,14 +54,16 @@ namespace ByteStorm.Controllers
         {
             return await _context.Misiones.Where(m => m.estado == "Planificada")
                 .Include(m => m.operativo).Include(m => m.equipos)
-                .Select(m => MisionToDTO(m, true)).ToListAsync();
+                .Select(m => MisionToDTO(m, true, true)).ToListAsync();
         }
 
         // PUT: api/Misiones/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMision(int id, MisionDTO misionDTO)
         {
-            if (id != misionDTO.codigo)
+            // Ademas del codigo compobamos si la mision esta completada
+            // Una mision completada no se puede modificar
+            if (id != misionDTO.codigo || misionDTO.estado == "Completada")
             {
                 return BadRequest();
             }
@@ -165,6 +167,60 @@ namespace ByteStorm.Controllers
             return NoContent();
         }
 
+        // PUT: api/Misiones/Completar/5
+        // Funcion para completar una mision con un ID determinado
+        [HttpPut("Completar/{id}")]
+        public async Task<IActionResult> CompleteMision(int id)
+        {
+            var mision = await _context.Misiones.Include(m => m.equipos)
+                .FirstOrDefaultAsync(m => m.codigo == id);
+            if (mision == null)
+            {
+                return NotFound();
+            }
+
+            // Se quita el operativo asignados
+            mision.idOperativo = null;
+            mision.operativo = null;
+            // Si la mision tenia equipos, le cambiamos el estado a disponibles y limpiamos
+            // la lista
+            if (mision.equipos is not null && mision.equipos.Count > 0)
+            {
+                // Obtenemos los IDs de los equipos de la mision
+                List<int> IDs = mision.equipos.Select(e => e.ID).ToList();
+                // Buscamos los equipos con los IDs obtenidos
+                List<Equipo> equipos = await _context.Equipos
+                    .Where(e => IDs.Contains(e.ID)).ToListAsync();
+                // Cambiamos el estado de los equipos eliminados a Disponible
+                equipos.ForEach(e => e.estado = "Disponible");
+                // Vaciamos la lista de equipos
+                mision.equipos.Clear();
+            }
+
+            // Se cambia el estado de la mision a completada
+            mision.estado = "Completada";
+
+            _context.Entry(mision).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!MisionExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
         // POST: api/Misiones
         [HttpPost]
         public async Task<ActionResult<MisionDTO>> PostMision(MisionDTO misionDTO)
@@ -211,7 +267,7 @@ namespace ByteStorm.Controllers
             return CreatedAtAction(
                 nameof(GetMision), 
                 new { id = mision.codigo }, 
-                MisionToDTO(mision, true));
+                MisionToDTO(mision, true, true));
         }
 
         // DELETE: api/Misiones/5
@@ -252,9 +308,12 @@ namespace ByteStorm.Controllers
         /// Funcion para transformar una mision en su version DTO
         /// </summary>
         /// <param name="mision">Mision a transformar en DTO</param>
-        /// <param name="operativoToDTO">Booleano para saber si transformar tambien el operativo</param>
-        /// <returns></returns>
-        public static MisionDTO MisionToDTO(Mision mision, bool operativoToDTO)
+        /// <param name="operativoToDTO">Booleano para saber si transformar 
+        /// tambien el operativo</param>
+        /// <param name="equiposToDTO">Booleano para saber si transformar 
+        /// tambien los equipos</param>
+        /// <returns> Version DTO de la mision </returns>
+        public static MisionDTO MisionToDTO(Mision mision, bool operativoToDTO, bool equiposToDTO)
         {
             // Creamos una mision DTO y asignamos el codigo, descripcion y estado
             var misionDTO = new MisionDTO
@@ -263,18 +322,18 @@ namespace ByteStorm.Controllers
                 descripcion = mision.descripcion,
                 estado = mision.estado
             };
+            
             // Comprobamos si la mision tiene un operativo para crear el DTO
-            if(mision.operativo is not null)
-            {
+            if(operativoToDTO && mision.operativo is not null)
                 // Creamos el DTO del operativo pero sin guardar las misiones
-                misionDTO.operativoDTO = OperativosController.OperativoToDTO(mision.operativo,false);
-            }   
+                misionDTO.operativoDTO = OperativosController
+                    .OperativoToDTO(mision.operativo,false);  
+            
             // Comprobamos si la mision tiene equipos para crear el DTO
-            if (mision.equipos is not null)
-            {
+            if (equiposToDTO && mision.equipos is not null)
                 // Convertimos todos los equipos en DTOs
-                misionDTO.equiposDTO = mision.equipos.ConvertAll(m => EquiposController.EquipoToDTO(m));
-            }
+                misionDTO.equiposDTO = mision.equipos
+                    .ConvertAll(m => EquiposController.EquipoToDTO(m, false));
             
             // Devolvemos el resultado
             return misionDTO;

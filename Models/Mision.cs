@@ -3,16 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ByteStorm.Models
 {
-    /*
-    // Enumerado para estado de mision
-    public enum EstadoMision
-    {
-        Planificada,
-        Activa,
-        Completada
-    }
-    */
-
     // Clase para representar una mision
     public class Mision
     {

@@ -5,7 +5,7 @@
 namespace ByteStorm.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class Inicial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -41,7 +41,8 @@ namespace ByteStorm.Migrations
                         name: "FK_Misiones_Operativos_idOperativo",
                         column: x => x.idOperativo,
                         principalTable: "Operativos",
-                        principalColumn: "ID");
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -53,22 +54,23 @@ namespace ByteStorm.Migrations
                     tipo = table.Column<string>(type: "TEXT", nullable: false),
                     descripcion = table.Column<string>(type: "TEXT", nullable: false),
                     estado = table.Column<string>(type: "TEXT", nullable: false),
-                    Misioncodigo = table.Column<int>(type: "INTEGER", nullable: true)
+                    codigoMision = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Equipos", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Equipos_Misiones_Misioncodigo",
-                        column: x => x.Misioncodigo,
+                        name: "FK_Equipos_Misiones_codigoMision",
+                        column: x => x.codigoMision,
                         principalTable: "Misiones",
-                        principalColumn: "codigo");
+                        principalColumn: "codigo",
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Equipos_Misioncodigo",
+                name: "IX_Equipos_codigoMision",
                 table: "Equipos",
-                column: "Misioncodigo");
+                column: "codigoMision");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Misiones_idOperativo",

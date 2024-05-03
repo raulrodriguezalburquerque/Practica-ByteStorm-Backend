@@ -204,7 +204,7 @@ namespace ByteStorm.Controllers
         /// </summary>
         /// <param name="operativo">Operativo que transformar en DTO</param>
         /// <param name="misionsToDTO">Booleano para saber si transformamos tambien las misiones</param>
-        /// <returns></returns>
+        /// <returns> Version DTO del operativo </returns>
         public static OperativoDTO OperativoToDTO(Operativo operativo, bool misionsToDTO)
         {
             // Creamos un operativo DTO y asignamos el ID, nombre y rol
@@ -220,7 +220,7 @@ namespace ByteStorm.Controllers
             {
                 // Convertimos todas las misiones en DTOs pero sin guardar al operativo
                 operativoDTO.misionesDTO = operativo.misiones
-                    .ConvertAll(m => MisionesController.MisionToDTO(m,false));
+                    .ConvertAll(m => MisionesController.MisionToDTO(m,false,true));
             }
             // Devolvemos el resultado
             return operativoDTO;

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ByteStorm.Migrations
 {
     [DbContext(typeof(BDContext))]
-    [Migration("20240412115644_Init")]
-    partial class Init
+    [Migration("20240430110434_Inicial")]
+    partial class Inicial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,7 +26,7 @@ namespace ByteStorm.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("Misioncodigo")
+                    b.Property<int?>("codigoMision")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("descripcion")
@@ -43,7 +43,7 @@ namespace ByteStorm.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("Misioncodigo");
+                    b.HasIndex("codigoMision");
 
                     b.ToTable("Equipos");
                 });
@@ -93,16 +93,20 @@ namespace ByteStorm.Migrations
 
             modelBuilder.Entity("ByteStorm.Models.Equipo", b =>
                 {
-                    b.HasOne("ByteStorm.Models.Mision", null)
+                    b.HasOne("ByteStorm.Models.Mision", "mision")
                         .WithMany("equipos")
-                        .HasForeignKey("Misioncodigo");
+                        .HasForeignKey("codigoMision")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("mision");
                 });
 
             modelBuilder.Entity("ByteStorm.Models.Mision", b =>
                 {
                     b.HasOne("ByteStorm.Models.Operativo", "operativo")
                         .WithMany("misiones")
-                        .HasForeignKey("idOperativo");
+                        .HasForeignKey("idOperativo")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("operativo");
                 });

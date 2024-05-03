@@ -253,3 +253,4 @@ C:\Users\raulr\Desktop\Trabajo\Repositorios-CSharp\ByteStorm\bin\Debug\net8.0\ru
 C:\Users\raulr\Desktop\Trabajo\Repositorios-CSharp\ByteStorm\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\raulr\Desktop\Trabajo\Repositorios-CSharp\ByteStorm\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Windows.Extensions.dll
 C:\Users\raulr\Desktop\Trabajo\Repositorios-CSharp\ByteStorm\bin\Debug\net8.0\DataBase\bytestorm.db
+C:\Users\raulr\Desktop\Trabajo\Repositorios-CSharp\ByteStorm\obj\Debug\net8.0\ByteStorm.sourcelink.json

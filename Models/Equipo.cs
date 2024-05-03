@@ -4,22 +4,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ByteStorm.Models
 {
-    /*
-    // Enumerado para tipo de equipo
-    public enum TipoEquipo
-    {
-        Software,
-        Hardware
-    }
-
-    // Enumerado para estado de equipo
-    public enum EstadoEquipo
-    {
-        Disponible,
-        EnUso
-    }
-    */
-
     // Clase para representar un equipo
     public class Equipo
     {
@@ -31,6 +15,10 @@ namespace ByteStorm.Models
         public required string descripcion { get; set; }
         // Estado
         public required string estado { get; set; }
+        // Codigo de la mision a la que esta asignado
+        public int? codigoMision { get; set; }
+        // Mision a la que esta asignado
+        public virtual Mision? mision { get; set; }
     }
 
 }

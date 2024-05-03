@@ -16,20 +16,31 @@ public class BDContext : DbContext
     {
         modelBuilder.Entity<Operativo>(entity => 
         {
+            // Asignacion de clave primaria
             entity.HasKey(o => o.ID);
         });
 
         modelBuilder.Entity<Mision>(entity =>
         {
+            // Asignacion de clave primaria
             entity.HasKey(m => m.codigo);
 
+            // Configuracion de la relacion entre misiones y operativos
             entity.HasOne(m => m.operativo)
             .WithMany(o => o.misiones)
-            .HasForeignKey(m => m.idOperativo);
+            .HasForeignKey(m => m.idOperativo)
+            .OnDelete(DeleteBehavior.SetNull);
+
+            // Configuracion de la relacion entre misiones y equipos
+            entity.HasMany(m => m.equipos)
+            .WithOne(e => e.mision)
+            .HasForeignKey(e => e.codigoMision)
+            .OnDelete(DeleteBehavior.SetNull);
         });
 
         modelBuilder.Entity<Equipo>(entity =>
         {
+            // Asignacion de clave primaria
             entity.HasKey(e => e.ID);
         });
 

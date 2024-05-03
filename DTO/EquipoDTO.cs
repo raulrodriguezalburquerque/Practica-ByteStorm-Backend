@@ -1,4 +1,6 @@
-﻿namespace ByteStorm.DTO
+﻿using ByteStorm.Models;
+
+namespace ByteStorm.DTO
 {
     // DTO de equipo
     public class EquipoDTO
@@ -11,6 +13,8 @@
         public required string descripcion { get; set; }
         // Estado
         public required string estado { get; set; }
+        // Mision a la que esta asignado
+        public virtual MisionDTO? misionDTO { get; set; }
     }
 
 }
