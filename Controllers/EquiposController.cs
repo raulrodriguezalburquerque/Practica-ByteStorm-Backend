@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ByteStorm.Models;
 using ByteStorm.DTO;
+using ByteStorm.Repositorios;
 
 namespace ByteStorm.Controllers
 {
@@ -14,10 +15,18 @@ namespace ByteStorm.Controllers
     [ApiController]
     public class EquiposController : ControllerBase
     {
+        // Repositorio de equipos y misiones
+        private readonly IRepositorioEquipos _repositorioEquipos;
+        private readonly IRepositorioMisiones _repositorioMisiones;
+
         private readonly BDContext _context;
 
-        public EquiposController(BDContext context)
+        public EquiposController(IRepositorioEquipos repositorioEquipos,
+            IRepositorioMisiones repositorioMisiones, BDContext context)
         {
+            _repositorioEquipos = repositorioEquipos;
+            _repositorioMisiones = repositorioMisiones;
+
             _context = context;
         }
 
@@ -25,23 +34,14 @@ namespace ByteStorm.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EquipoDTO>>> GetEquipos()
         {
-            return await _context.Equipos.Include(e => e.mision)
-                .Select(e => EquipoToDTO(e, true)).ToListAsync();
+            return await _repositorioEquipos.ObtenerEquipos();
         }
 
         // GET: api/Equipos/5
         [HttpGet("{id}")]
         public async Task<ActionResult<EquipoDTO>> GetEquipo(int id)
         {
-            var equipo = await _context.Equipos.Include(e => e.mision)
-                .FirstOrDefaultAsync(e => e.ID == id);
-
-            if (equipo == null)
-            {
-                return NotFound();
-            }
-
-            return EquipoToDTO(equipo, true);
+            return await _repositorioEquipos.ObtenerEquipoDTO(id);
         }
 
         // PUT: api/Equipos/5
@@ -53,8 +53,7 @@ namespace ByteStorm.Controllers
                 return BadRequest();
             }
 
-            var equipo = await _context.Equipos.Include(e => e.mision)
-                .FirstOrDefaultAsync(e => e.ID == id);
+            var equipo = await _repositorioEquipos.ObtenerEquipo(id);
             if (equipo == null)
             {
                 return NotFound();
@@ -68,9 +67,8 @@ namespace ByteStorm.Controllers
             if (equipoDTO.misionDTO is not null)
             {
                 // Buscamos la mision usando el codigo de la mision DTO
-                equipo.mision = await _context.Misiones.Include(m => m.equipos)
-                    .Include(m => m.operativo)
-                    .FirstOrDefaultAsync(m => m.codigo == equipoDTO.misionDTO.codigo);
+                equipo.mision = await _repositorioMisiones
+                    .ObtenerMision(equipoDTO.misionDTO.codigo);
                 // Asignamos el ID
                 if (equipo.mision is not null) equipo.codigoMision = equipo.mision.codigo;
                 // Cambiamos el estado del equipo a En Uso
@@ -85,25 +83,7 @@ namespace ByteStorm.Controllers
                 equipo.estado = "Disponible";
             }
 
-            _context.Entry(equipo).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EquipoExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return await _repositorioEquipos.ModificarEquipo(equipo);
         }
 
         // POST: api/Equipos
@@ -120,9 +100,8 @@ namespace ByteStorm.Controllers
             if (equipoDTO.misionDTO is not null)
             {
                 // Buscamos la mision usando el codigo del DTO
-                equipo.mision = await _context.Misiones.Include(m => m.equipos)
-                    .Include(m => m.operativo)
-                    .FirstOrDefaultAsync(m => m.codigo == equipoDTO.misionDTO.codigo);
+                equipo.mision = await _repositorioMisiones
+                    .ObtenerMision(equipoDTO.misionDTO.codigo);
                 // Asignamos el codigo
                 if (equipo.mision is not null) equipo.codigoMision = equipo.mision.codigo;
                 // Cambiamos el estado del equipo a En Uso
@@ -132,60 +111,20 @@ namespace ByteStorm.Controllers
                 // Asignamos el estado Disponible
                 equipo.estado = "Disponible";
 
-            _context.Equipos.Add(equipo);
-            await _context.SaveChangesAsync();
+            await _repositorioEquipos.InsertarEquipo(equipo);
 
             return CreatedAtAction(
-                nameof(GetEquipo), 
-                new { id = equipo.ID }, 
-                EquipoToDTO(equipo,true));
+                nameof(GetEquipo),
+                new { id = equipo.ID },
+                RepositorioEquipos.EquipoToDTO(equipo, true));
         }
 
         // DELETE: api/Equipos/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEquipo(int id)
         {
-            var equipo = await _context.Equipos.FindAsync(id);
-            if (equipo == null)
-            {
-                return NotFound();
-            }
-
-            _context.Equipos.Remove(equipo);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            return await _repositorioEquipos.BorrarEquipo(id);
         }
 
-        private bool EquipoExists(int id)
-        {
-            return _context.Equipos.Any(e => e.ID == id);
-        }
-
-        /// <summary>
-        /// Funcion para transformar un equipo en su version DTO
-        /// </summary>
-        /// <param name="equipo">Equipo a transformar en DTO</param>
-        /// <param name="misionToDTO">Booleano para saber si transformar 
-        /// tambien la mision</param>
-        /// <returns> Version DTO del equipo </returns>
-        public static EquipoDTO EquipoToDTO(Equipo equipo, bool misionToDTO)
-        {
-            // Creamos un equipo DTO y asignamos id, tipo, descripcion y estado
-            var equipoDTO = new EquipoDTO
-            {
-                ID = equipo.ID,
-                tipo = equipo.tipo,
-                descripcion = equipo.descripcion,
-                estado = equipo.estado
-            };
-            
-            // Comprobamos si el equipo tiene una mision para crear el DTO
-            if (misionToDTO && equipo.mision is not null)
-                equipoDTO.misionDTO = MisionesController.MisionToDTO(equipo.mision, true, false);
-            
-            // Devolvemos el resultado
-            return equipoDTO;
-        }
     }
 }

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using ByteStorm.Controllers;
 using ByteStorm.Models;
 using ByteStorm.DTO;
+using ByteStorm.Repositorios;
 
 namespace ByteStorm.Controllers
 {
@@ -321,7 +322,7 @@ namespace ByteStorm.Controllers
             if (equiposToDTO && mision.equipos is not null)
                 // Convertimos todos los equipos en DTOs
                 misionDTO.equiposDTO = mision.equipos
-                    .ConvertAll(m => EquiposController.EquipoToDTO(m, false));
+                    .ConvertAll(m => RepositorioEquipos.EquipoToDTO(m, false));
             
             // Devolvemos el resultado
             return misionDTO;

@@ -1,4 +1,5 @@
 using ByteStorm.Models;
+using ByteStorm.Repositorios;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography.Xml;
 using System.Text.Json.Serialization;
@@ -24,6 +25,10 @@ builder.Services.AddCors(policyBuilder =>
     policyBuilder.AddDefaultPolicy(policy =>
         policy.WithOrigins("*").AllowAnyHeader().AllowAnyMethod())
 );
+
+// Insercion de dependencias de los repositorios con sus interfaces
+builder.Services.AddScoped<IRepositorioEquipos, RepositorioEquipos>();
+builder.Services.AddScoped<IRepositorioMisiones, RepositorioMisiones>();
 
 // Construimos la API
 var app = builder.Build();

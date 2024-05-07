@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ByteStorm")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7cfdb19230c6ec6975db9a59df1f02a19769dcbe")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e4c820455429693d44de03ec92eb63416d25c7f9")]
 [assembly: System.Reflection.AssemblyProductAttribute("ByteStorm")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ByteStorm")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
