@@ -19,15 +19,11 @@ namespace ByteStorm.Controllers
         private readonly IRepositorioEquipos _repositorioEquipos;
         private readonly IRepositorioMisiones _repositorioMisiones;
 
-        private readonly BDContext _context;
-
         public EquiposController(IRepositorioEquipos repositorioEquipos,
-            IRepositorioMisiones repositorioMisiones, BDContext context)
+            IRepositorioMisiones repositorioMisiones)
         {
             _repositorioEquipos = repositorioEquipos;
             _repositorioMisiones = repositorioMisiones;
-
-            _context = context;
         }
 
         // GET: api/Equipos
