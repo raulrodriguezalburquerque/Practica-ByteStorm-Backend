@@ -30,14 +30,26 @@ namespace ByteStorm.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EquipoDTO>>> GetEquipos()
         {
-            return await _repositorioEquipos.ObtenerEquipos();
+            // Obtenemos los equipos
+            IEnumerable<EquipoDTO> equipos = await _repositorioEquipos.ObtenerEquipos();
+            // Comprobamos si los hemos encontrado
+            if (equipos == null)
+                return NotFound();
+            else
+                return Ok(equipos);
         }
 
         // GET: api/Equipos/5
         [HttpGet("{id}")]
         public async Task<ActionResult<EquipoDTO>> GetEquipo(int id)
         {
-            return await _repositorioEquipos.ObtenerEquipoDTO(id);
+            // Buscamos el equipo
+            EquipoDTO equipo = await _repositorioEquipos.ObtenerEquipoDTO(id);
+            // Comprobamos si lo hemos encontrado
+            if (equipo == null)
+                return NotFound();
+            else
+                return equipo;
         }
 
         // PUT: api/Equipos/5
@@ -79,7 +91,10 @@ namespace ByteStorm.Controllers
                 equipo.estado = "Disponible";
             }
 
-            return await _repositorioEquipos.ModificarEquipo(equipo);
+            if(!await _repositorioEquipos.ModificarEquipo(equipo))
+                return NotFound();
+            else
+                return NoContent();
         }
 
         // POST: api/Equipos
@@ -119,7 +134,10 @@ namespace ByteStorm.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEquipo(int id)
         {
-            return await _repositorioEquipos.BorrarEquipo(id);
+            if (!await _repositorioEquipos.BorrarEquipo(id))
+                return NotFound();
+            else
+                return NoContent();
         }
 
     }

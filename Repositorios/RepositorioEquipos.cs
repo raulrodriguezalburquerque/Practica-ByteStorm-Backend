@@ -9,23 +9,23 @@ using ByteStorm.Controllers;
 public interface IRepositorioEquipos
 {
     // Funcion para obtener todos los equipos de la base de datos
-    Task<ActionResult<IEnumerable<EquipoDTO>>> ObtenerEquipos();
+    Task<IEnumerable<EquipoDTO>> ObtenerEquipos();
     // Funcion para obtener un equipo por ID
     Task<Equipo> ObtenerEquipo(int id);
     // Funcion para obtener un equipo DTO por ID
-    Task<ActionResult<EquipoDTO>> ObtenerEquipoDTO(int id);
+    Task<EquipoDTO> ObtenerEquipoDTO(int id);
     // Funcion para modificar un equipo
-    Task<IActionResult> ModificarEquipo(Equipo equipo);
+    Task<bool> ModificarEquipo(Equipo equipo);
     // Funcion para insertar un equipo en la base de datos
     Task<int> InsertarEquipo(Equipo equipo);
     // Funcion para borrar un equipo de la base de datos
-    Task<IActionResult> BorrarEquipo(int id);
+    Task<bool> BorrarEquipo(int id);
     // Funcion para saber si existe un equipo en la base de datos
     bool EquipoExists(int id);
 }
 
 // Clase con el repositorio de los equipos
-public class RepositorioEquipos : ControllerBase, IRepositorioEquipos
+public class RepositorioEquipos : IRepositorioEquipos
 {
     private readonly BDContext _context;
 
@@ -35,7 +35,7 @@ public class RepositorioEquipos : ControllerBase, IRepositorioEquipos
     }
 
     // Funcion para obtener todos los equipos de la base de datos
-    public async Task<ActionResult<IEnumerable<EquipoDTO>>> ObtenerEquipos()
+    public async Task<IEnumerable<EquipoDTO>> ObtenerEquipos()
     {
         return await _context.Equipos.Include(e => e.mision)
                 .Select(e => EquipoToDTO(e, true)).ToListAsync();
@@ -49,20 +49,21 @@ public class RepositorioEquipos : ControllerBase, IRepositorioEquipos
     }
 
     // Funcion para obtener un equipo DTO por ID
-    public async Task<ActionResult<EquipoDTO>> ObtenerEquipoDTO(int id)
+    public async Task<EquipoDTO> ObtenerEquipoDTO(int id)
     {
         var equipo = await ObtenerEquipo(id);
 
         if (equipo == null)
         {
-            return NotFound();
+            return null;
         }
 
         return EquipoToDTO(equipo, true);
     }
 
     // Funcion para modificar un equipo
-    public async Task<IActionResult> ModificarEquipo(Equipo equipo)
+    // Devuelve si se ha podido modificar
+    public async Task<bool> ModificarEquipo(Equipo equipo)
     {
         _context.Entry(equipo).State = EntityState.Modified;
 
@@ -74,7 +75,7 @@ public class RepositorioEquipos : ControllerBase, IRepositorioEquipos
         {
             if (!EquipoExists(equipo.ID))
             {
-                return NotFound();
+                return false;
             }
             else
             {
@@ -82,7 +83,7 @@ public class RepositorioEquipos : ControllerBase, IRepositorioEquipos
             }
         }
 
-        return NoContent();
+        return true;
     }
 
     // Funcion para insertar un equipo en la base de datos
@@ -93,18 +94,19 @@ public class RepositorioEquipos : ControllerBase, IRepositorioEquipos
     }
 
     // Funcion para borrar un equipo de la base de datos
-    public async Task<IActionResult> BorrarEquipo(int id)
+    // Devuelve si se ha podido borrar
+    public async Task<bool> BorrarEquipo(int id)
     {
         var equipo = await ObtenerEquipo(id);
         if (equipo == null)
         {
-            return NotFound();
+            return false;
         }
 
         _context.Equipos.Remove(equipo);
         await _context.SaveChangesAsync();
 
-        return NoContent();
+        return true;
     }
 
     // Funcion para saber si existe un equipo en la base de datos
